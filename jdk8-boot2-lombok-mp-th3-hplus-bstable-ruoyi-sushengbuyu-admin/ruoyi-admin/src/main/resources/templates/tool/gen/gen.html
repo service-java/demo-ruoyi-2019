@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+    <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="gen-form">
+					<div class="select-list">
+						<ul>
+							<li>
+								表名称：<input type="text" name="tableName"/>
+							</li>
+							<li>
+								表描述：<input type="text" name="tableComment"/>
+							</li>
+							<li class="select-time">
+								<label>表时间： </label>
+								<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
+								<span>-</span>
+								<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
+							</li>
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+            <div id="app" class="col-sm-12 search-collapse">
+                <form>
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                开发者：<input v-model="genConfig.author" type="text"/>
+                            </li>
+                            <li>
+                                包名：<input v-model="genConfig.packageName" type="text"/>
+                            </li>
+                            <li>
+                                表前缀：<input v-model="genConfig.tablePrefix" type="text"/>
+                            </li>
+                            <li>
+                                自动去除表前缀：
+                                <select v-model="genConfig.autoRemovePre" name="visible">
+                                    <option value="true">开</option>
+                                    <option value="false">关</option>
+                                </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" @click="apply()"><i class="fa fa-search"></i>&nbsp;应用</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" @click="reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+			
+			<div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="javascript:batchGenCode()" shiro:hasPermission="tool:gen:code">
+			        <i class="fa fa-download"></i> 批量生成
+			    </a>
+		    </div>
+		
+		    <div class="col-sm-12 select-table table-striped">
+			    <table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var genConfig = {
+            author: [[${author}]],
+            packageName: [[${packageName}]],
+            autoRemovePre: [[${autoRemovePre}]],
+            tablePrefix: [[${tablePrefix}]]
+        }
+    </script>
+	<script type="text/javascript">
+		var prefix = ctx + "tool/gen";
+
+		var vm = new Vue({
+            el: "#app",
+            data: {
+                genConfig: genConfig
+            },
+            methods: {
+                reset: function () {
+                    $.modal.confirm("确定要重置该配置吗？", function() {
+                        this.genConfig = genConfig;
+                        applyGenConfig();
+                    });
+                },
+                apply: function () {
+                    console.log("应用修改");
+                    $.modal.confirm("确定要应用该配置吗？", function() {
+                        applyGenConfig();
+                    });
+                }
+            },
+            created: function () {
+                console.log("data:"+this.genConfig)
+            }
+        });
+
+		function applyGenConfig(msg){
+            var config = {
+                url: prefix + "/apply",
+                type: 'post',
+                dataType: "json",
+                data: vm.genConfig,
+                beforeSend: function () {
+                    $.modal.loading("正在处理中，请稍后...");
+                },
+                success: function(result) {
+                    if (result.code === web_status.SUCCESS) {
+                        $.modal.msgSuccess(result.msg);
+                    } else {
+                        $.modal.alertError(result.msg);
+                    }
+                    $.modal.closeLoading();
+                }
+            };
+            $.ajax(config);
+        }
+
+		$(function() {
+		    var options = {
+		        url: prefix + "/list",
+		        sortName: "createTime",
+		        sortOrder: "desc",
+		        search: false,
+		        columns: [{
+		            checkbox: true
+		        },
+		        {
+                    title: "序号",
+                    formatter: function (value, row, index) {
+                 	    return $.table.serialNumber(index);
+                    }
+                },
+		        {
+		            field: 'tableName',
+		            title: '表名称',
+		            width: '20%',
+		            sortable: true
+		        },
+		        {
+		            field: 'tableComment',
+		            title: '表描述',
+		            width: '20%',
+		            sortable: true
+		        },
+		        {
+		            field: 'createTime',
+		            title: '创建时间',
+		            width: '20%',
+		            sortable: true
+		        },
+		        {
+		            field: 'updateTime',
+		            title: '更新时间',
+		            width: '20%',
+		            sortable: true
+		        },
+		        {
+		            title: '操作',
+		            width: '20%',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		                var msg = '<a class="btn btn-primary btn-xs" href="#" onclick="genCode(\'' + row.tableName + '\')"><i class="fa fa-bug"></i>生成代码</a> ';
+		                return msg;
+		            }
+		        }]
+		    };
+		    $.table.init(options);
+		});
+	
+		// 生成代码
+		function genCode(tableName) {
+		    $.modal.confirm("确定要生成" + tableName + "表代码吗？", function() {
+		        location.href = prefix + "/genCode/" + tableName;
+		        layer.msg('执行成功,正在生成代码请稍后…', { icon: 1 });
+		    })
+		}
+	
+		//批量生成代码
+		function batchGenCode() {
+		    var rows = $.table.selectColumns("tableName");
+		    if (rows.length === 0) {
+		        $.modal.alertWarning("请选择要生成的数据");
+		        return;
+		    }
+		    $.modal.confirm("确认要生成选中的" + rows.length + "条数据吗?", function() {
+		        location.href = prefix + "/batchGenCode?tables=" + rows;
+		        layer.msg('执行成功,正在生成代码请稍后…', { icon: 1 });
+		    });
+		}
+	</script>
+</body>
+</html>

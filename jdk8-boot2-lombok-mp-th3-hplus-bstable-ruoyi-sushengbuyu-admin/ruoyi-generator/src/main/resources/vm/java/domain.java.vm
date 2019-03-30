@@ -1,0 +1,42 @@
+package ${package}.domain;
+
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.ruoyi.common.base.BaseEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+#foreach ($column in $columns)
+#if($column.attrType == 'Date')
+import java.util.Date;
+#break
+#end
+#end
+
+/**
+ * ${tableComment}表 ${tableName}
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+@EqualsAndHashCode(callSuper = true)
+@ToString
+@Data
+@Accessors(chain = true)
+@TableName("${tableName}")
+public class ${className} extends BaseEntity{
+    private static final long serialVersionUID = 1L;
+
+    @TableId
+    private $primaryKey.attrType $primaryKey.attrname;
+	
+#foreach ($column in $columns)
+#if($velocityCount > 1 && ${commonColumnNames.indexOf("${column.attrname}")} == -1)
+    /**
+    * $column.columnComment
+    */
+    private $column.attrType $column.attrname;
+#end
+#end
+}

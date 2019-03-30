@@ -1,0 +1,26 @@
+-- 新模块主目录 SQL 一个模块执行一次即可
+insert into sys_menu (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('${moduleName}管理', '0', '1', '#', 'M', '0', '', 'fa fa-gear', 'admin', '${datetime}', '${author}', '${datetime}', '${moduleName}管理');
+
+-- 菜单父目录ID
+SELECT @parentMId := (select menu_id from sys_menu where menu_name = '${moduleName}管理');
+
+-- 菜单 SQL
+insert into sys_menu (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('${tableComment}', @parentMId, '1', '/${moduleName}/${classname}', 'C', '0', '${moduleName}:${classname}:view', '#', 'admin', '${datetime}', '${author}', '${datetime}', '${tableComment}菜单');
+
+-- 按钮父菜单ID
+SELECT @parentCId := LAST_INSERT_ID();
+
+-- 按钮 SQL
+insert into sys_menu  (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('${tableComment}查询', @parentCId, '1',  '#',  'F', '0', '${moduleName}:${classname}:list', '#', 'admin', '${datetime}', '${author}', '${datetime}', '');
+
+insert into sys_menu  (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('${tableComment}新增', @parentCId, '2',  '#',  'F', '0', '${moduleName}:${classname}:add', '#', 'admin', '${datetime}', '${author}', '${datetime}', '');
+
+insert into sys_menu  (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('${tableComment}修改', @parentCId, '3',  '#',  'F', '0', '${moduleName}:${classname}:edit', '#', 'admin', '${datetime}', '${author}', '${datetime}', '');
+
+insert into sys_menu  (menu_name, parent_id, order_num, url,menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('${tableComment}删除', @parentCId, '4',  '#',  'F', '0', '${moduleName}:${classname}:remove', '#', 'admin', '${datetime}', '${author}', '${datetime}', '');

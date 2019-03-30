@@ -1,0 +1,87 @@
+.select-list li input:focus, .select-list li input:hover,
+.select-list li select:focus, .select-list li select:hover,
+.form-control:hover, .form-control:focus{
+    border-color: rgba(91, 192, 222, 0.8) !important;
+    -webkit-box-shadow: 0 0 5px rgba(91, 192, 222, .5);
+    -moz-box-shadow: 0 0 5px rgba(91, 192, 222, .5);
+    box-shadow: 0 0 5px rgba(91, 192, 222, .5);
+}
+
+.bootstrap-table .table tr.selected{
+    background-color: #afdfe4;
+}
+
+
+.fixed-table-container thead th .sortable {
+    padding-right: 0;
+}
+
+.form-group textarea{
+    width: 100%;
+    height: 100px;
+}
+
+/**
+日期样式修改
+ */
+.datetime-input{
+    width: 200px;
+}
+.datetime-input i{
+    position: absolute;
+    left: 23px;
+    top: 8px;
+    font-size: 16px;
+}
+.datetime-input input{
+    padding-left: 30px;
+}
+
+/**
+ layui图片上传设置
+ */
+.layui-upload .layui-upload-file{
+    display: none;
+}
+
+.layui-upload .layui-upload-list{
+    padding: 5px 0;
+}
+
+.layui-upload .layui-upload-list img{
+    max-width: 300px;
+    border: 1px solid #ff0000;
+    padding: 5px;
+    display: none;
+}
+
+.layui-upload .layui-upload-list p{
+    font-size: 16px;
+    padding: 10px 0;
+    color: #ff0000;
+    display: none;
+}
+
+.layui-upload .layui-upload-list p:after{
+    content: '(not upload)';
+}
+
+.layui-upload .layui-upload-list .done{
+    color: #1ab394;
+    border-color: #1ab394;
+}
+
+.layui-upload .layui-upload-list p.done:after{
+    content: '';
+}
+
+.select-list .select-time input{
+    width: 200px;
+}
+
+/**
+表格图片大小限制
+ */
+.banner-thumb{
+    max-height: 50px;
+}
