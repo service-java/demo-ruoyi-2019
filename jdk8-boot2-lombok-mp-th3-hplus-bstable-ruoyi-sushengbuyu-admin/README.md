@@ -1,3 +1,8 @@
+# README
+
+- 账号 admin/admin123
+- 此版本sql滞后master,需要先执行本地sql
+
 ## 平台简介
 
 基于RuoYi 3.2版修改
