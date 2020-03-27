@@ -26,15 +26,15 @@ import com.ruoyi.system.oss.CloudConstant.CloudService;
 import com.ruoyi.system.oss.CloudStorageConfig;
 import com.ruoyi.system.oss.CloudStorageService;
 import com.ruoyi.system.oss.OSSFactory;
-import com.ruoyi.system.oss.valdator.AliyunGroup;
-import com.ruoyi.system.oss.valdator.QcloudGroup;
-import com.ruoyi.system.oss.valdator.QiniuGroup;
+import com.ruoyi.system.oss.validator.AliyunGroup;
+import com.ruoyi.system.oss.validator.QcloudGroup;
+import com.ruoyi.system.oss.validator.QiniuGroup;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysOssService;
 
 /**
  * 文件上传 提供者
- * 
+ *
  * @author zmr
  * @date 2019-05-16
  */
@@ -121,7 +121,7 @@ public class SysOssController extends BaseController
 
     /**
      * 修改保存文件上传
-     * @throws IOException 
+     * @throws IOException
      */
     @PostMapping("upload")
     @HasPermissions("sys:oss:add")

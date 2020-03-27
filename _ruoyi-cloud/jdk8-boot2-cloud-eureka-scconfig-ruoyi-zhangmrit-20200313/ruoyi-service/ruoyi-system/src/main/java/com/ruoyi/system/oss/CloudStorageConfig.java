@@ -8,9 +8,9 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
 
-import com.ruoyi.system.oss.valdator.AliyunGroup;
-import com.ruoyi.system.oss.valdator.QcloudGroup;
-import com.ruoyi.system.oss.valdator.QiniuGroup;
+import com.ruoyi.system.oss.validator.AliyunGroup;
+import com.ruoyi.system.oss.validator.QcloudGroup;
+import com.ruoyi.system.oss.validator.QiniuGroup;
 
 import lombok.Data;
 

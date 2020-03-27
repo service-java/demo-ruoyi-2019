@@ -1,4 +1,4 @@
-package com.ruoyi.system.oss.valdator;
+package com.ruoyi.system.oss.validator;
 
 /**
  * 阿里云
