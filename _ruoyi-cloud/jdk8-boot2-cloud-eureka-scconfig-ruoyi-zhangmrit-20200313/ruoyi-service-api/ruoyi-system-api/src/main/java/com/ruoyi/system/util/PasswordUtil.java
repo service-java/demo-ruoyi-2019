@@ -7,7 +7,8 @@ public class PasswordUtil
 {
     public static boolean matches(SysUser user, String newPassword)
     {
-        return user.getPassword().equals(encryptPassword(user.getLoginName(), newPassword, user.getSalt()));
+        String encryptedPassword = encryptPassword(user.getLoginName(), newPassword, user.getSalt());
+        return user.getPassword().equals(encryptedPassword);
     }
 
     public static String encryptPassword(String username, String password, String salt)

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "install:tyarn": "tyarn install",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "report": "vue-cli-service build --report",

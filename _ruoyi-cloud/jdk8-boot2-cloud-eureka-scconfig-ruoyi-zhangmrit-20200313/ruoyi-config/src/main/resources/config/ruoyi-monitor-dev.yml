@@ -3,9 +3,9 @@ spring:
   security:
     user:
       name: admin
-      password: admin
+      password: 123456
   boot:
     admin:
       ui:
         title: 服务监控中心
-        brand: "<img src='assets/img/icon-spring-boot-admin.svg'><span>应用监控管理</span>"   
+        brand: "<img src='assets/img/icon-spring-boot-admin.svg'><span>应用监控管理</span>"

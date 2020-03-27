@@ -27,7 +27,7 @@ import cn.hutool.core.convert.Convert;
 
 /**
  * 用户 提供者
- * 
+ *
  * @author zmr
  * @date 2019-05-20
  */
@@ -198,7 +198,7 @@ public class SysUserController extends BaseController
 
     /**
      * 删除用户
-     * @throws Exception 
+     * @throws Exception
      */
     @HasPermissions("system:user:remove")
     @OperLog(title = "用户管理", businessType = BusinessType.DELETE)
@@ -206,5 +206,11 @@ public class SysUserController extends BaseController
     public R remove(String ids) throws Exception
     {
         return toAjax(sysUserService.deleteUserByIds(ids));
+    }
+
+    public static void main(String[] args) {
+
+        String password = PasswordUtil.encryptPassword("admin", "123456", "111111");
+        System.out.println(password);
     }
 }

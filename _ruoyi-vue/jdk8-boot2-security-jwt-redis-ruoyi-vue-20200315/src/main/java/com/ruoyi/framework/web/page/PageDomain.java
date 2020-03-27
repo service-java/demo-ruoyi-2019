@@ -4,7 +4,7 @@ import com.ruoyi.common.utils.StringUtils;
 
 /**
  * 分页数据
- * 
+ *
  * @author ruoyi
  */
 public class PageDomain
@@ -15,6 +15,7 @@ public class PageDomain
     private Integer pageSize;
     /** 排序列 */
     private String orderByColumn;
+
     /** 排序的方向 "desc" 或者 "asc". */
     private String isAsc;
 

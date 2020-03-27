@@ -14,7 +14,7 @@ import com.ruoyi.common.utils.html.EscapeUtil;
 
 /**
  * XSS过滤处理
- * 
+ *
  * @author ruoyi
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper
@@ -93,8 +93,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper
 
     /**
      * 是否是Json请求
-     * 
-     * @param request
+     *
      */
     public boolean isJsonRequest()
     {
