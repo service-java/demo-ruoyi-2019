@@ -122,13 +122,14 @@ export function handleTree(data, id, parentId, children, rootId) {
 	//循环所有项
 	const treeData =  cloneData.filter(father => {
 	  let branchArr = cloneData.filter(child => {
-		//返回每一项的子级数组
-		return father[id] === child[parentId]
+		  //返回每一项的子级数组
+		  return father[id] === child[parentId]
 	  });
+
 	  branchArr.length > 0 ? father.children = branchArr : '';
-	  //返回第一层
+	  // 返回第一层
 	  return father[parentId] === rootId;
 	});
+
 	return treeData != '' ? treeData : data;
-  }
-  
+}
